@@ -9,7 +9,7 @@
 #   Default: 8.0
 # 
 # [*port*]
-#   The port number that the dataserver is listening to.
+#   The port number that the dataconfig is listening to.
 #   Default: 1433
 #
 # [*install*]
@@ -17,6 +17,30 @@
 #
 # [*ensure*]
 #   This tells the module to either what to do with the package it is installing. Values: installed|latest|absent
+#
+# [path]
+#   This is the full path to the directory of the configuration file ([config]).  Optional.  Defaults to freetds::params::path.
+#
+# [config]
+#   The file name of the freetds.conf file.  Optional.  Defaults to 'freetds.conf'.
+#
+# [path_mode]
+#   The file permissions of the $path directory.
+#
+# [path_owner]
+#   The ownership of the $path directory.
+#
+# [path_group]
+#   The group ownership of the $path directory.
+#
+# [config_mode]
+#   The file permissions of the $config file.
+#
+# [config_owner]
+#   The ownership of the $config file.
+#
+# [config_group]
+#   The group ownership of the $config file.
 #
 # Requires: see Modulefile
 #
@@ -34,28 +58,51 @@ class freetds (
   $port = $::freetds::params::port,
   $install = $::freetds::params::install,
   $ensure = $::freetds::params::ensure,
+  $path = $::freetds::params::path,
+  $config = $::freetds::params::config,
+
+  $text_size = undef,
+  $debug_flags = undef,
+  $dump_file = undef,
+
+  $path_mode  = $::freetds::params::path_mode,
+  $path_group = $::freetds::params::path_group,
+  $path_owner = $::freetds::params::path_owner,
+
+  $config_mode  = $::freetds::params::config_mode,
+  $config_group = $::freetds::params::config_group,
+  $config_owner = $::freetds::params::config_owner,
+
 ) inherits ::freetds::params {
+
   if $install {
-    class {"::freetds::package":
+    class {'::freetds::package':
+      ensure  => $ensure,
       install => $install,
-      ensure => $ensure,
     }
   }
+
+  file { $::freetds::path:
+    ensure => directory,
+    owner  => $path_owner,
+    group  => $path_group,
+    mode   => $path_mode,
+  }
   
-  concat{"${::freetds::params::config}":
-    owner => root,
-    group => root,
-    mode  => '0644',
+  concat{"${::freetds::path}/${::freetds::config}":
+    owner => $config_owner,
+    group => $config_group,
+    mode  => $config_mode,
   }
 
-  concat::fragment{"freetds_header":
-    target => "${::freetds::params::config}",
-    content => "### This file is managed by freetds puppet module. ###\n### Please do not make any Manual Changes! ###\n\n",
-    order   => 01,
-  }
+  #concat::fragment{"freetds_header":
+  #  target => "${::freetds::path}/${::freetds::config}",
+  #  content => "### This file is managed by freetds puppet module. ###\n### Please do not make any Manual Changes! ###\n\n",
+  #  order   => 01,
+  #}
   
   concat::fragment{"freetds_global_${name}":
-    target => "${::freetds::params::config}",
+    target  => "${::freetds::path}/${::freetds::config}",
     content => template("${module_name}/freetds.conf.erb"),
     order   => 10,
   }

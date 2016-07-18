@@ -1,19 +1,27 @@
 class freetds::params {
+
+  $version = '8.0'
+  $port = '1433'
   $install = true
   $ensure = installed
-  $version = "8.0"
-  $port = "1433"
-
+  
   case $::osfamily {
-    'debian': {
-      $config = "/etc/freetds/freetds.conf"
-      $locales = "/etc/freetds/locales.conf"
-    }
-    'redhat': {
-      $config = "/etc/freetds.conf"
-      $locales = "/etc/locales.conf"
-    }
+    
+    'debian':   { $path = '/etc/freetds' }
+    'redhat':   { $path = '/etc' }
+    default:   { $path = '/etc' }
+    
   }
-
+  
+  $config = 'freetds.conf'
+  $locales = 'locales.conf'
+  
+  $path_mode = '0644'
+  $path_owner = 'root'
+  $path_group = 'root'
+  
+  $config_mode = '0644'
+  $config_owner = 'root'
+  $config_group = 'root'
   
 }
