@@ -33,6 +33,15 @@
 # [path_group]
 #   The group ownership of the $path directory.
 #
+# [config_mode]
+#   The file permissions of the $config file.
+#
+# [config_owner]
+#   The ownership of the $config file.
+#
+# [config_group]
+#   The group ownership of the $config file.
+#
 # Requires: see Modulefile
 #
 # Sample Usage:
@@ -60,6 +69,10 @@ class freetds (
   $path_group = $::freetds::params::path_group,
   $path_owner = $::freetds::params::path_owner,
 
+  $config_mode  = $::freetds::params::config_mode,
+  $config_group = $::freetds::params::config_group,
+  $config_owner = $::freetds::params::config_owner,
+
 ) inherits ::freetds::params {
 
   if $install {
@@ -77,9 +90,9 @@ class freetds (
   }
   
   concat{"${::freetds::path}/${::freetds::config}":
-    owner => root,
-    group => root,
-    mode  => '0644',
+    owner => $config_owner,
+    group => $config_group,
+    mode  => $config_mode,
   }
 
   #concat::fragment{"freetds_header":
