@@ -1,0 +1,13 @@
+{
+  "LICENSE": "e3bb46e82001bdae6bac9aea3f182db3",
+  "README.markdown": "912dbdc062149fdadf289de29e11f9ba",
+  "manifests/conf.pp": "d24867bfe5c1ff59c706ae51ff915111",
+  "manifests/init.pp": "1a61da0f2c9e09782c71f2110b829ed4",
+  "manifests/locales.pp": "7f896f198a27e834c72668ed92740a9b",
+  "manifests/package.pp": "1b428edc29c9161c0afe6600757579e7",
+  "manifests/params.pp": "4945e421593303c6d5f17bce3aab56fb",
+  "metadata.json": "f205c0c1850efac30dbf5fd6cf86da7b",
+  "templates/freetds-host.conf.erb": "3b990d2a9ac6e870aa74a48d027488aa",
+  "templates/freetds.conf.erb": "d0ee13ea17fc565db81cca7b8d73a27a",
+  "templates/locales.conf.erb": "895bad454694cace4440bf1964b9fe53"
+}

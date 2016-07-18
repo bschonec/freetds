@@ -1,0 +1,20 @@
+{
+  "name": "tchmnkyz-freetds",
+  "version": "0.0.5",
+  "author": "Jeremy May <jeremy@rootservices.net>",
+  "summary": "Install and Configure FreeTDS",
+  "license": "Apache2",
+  "source": "http://git.rootservices.net/tchmnkyz/freetds.git",
+  "project_page": "http://git.rootservices.net/tchmnkyz/freetds",
+  "issues_url": null,
+  "dependencies": [
+    {
+      "version_requirement": "1.1.1",
+      "name": "puppetlabs/concat"
+    },
+    {
+      "version_requirement": "4.3.2",
+      "name": "puppetlabs/stdlib"
+    }
+  ]
+}
