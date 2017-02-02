@@ -1,4 +1,6 @@
-
+<%- if @comment %>
+# <%= @comment %>
+<% end -%>
 [<%= @name %>]
 	host = <%= @host %>
 	port = <%= @port %>

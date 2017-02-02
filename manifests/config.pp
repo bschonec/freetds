@@ -2,6 +2,7 @@ define freetds::config (
   $host,
   $port,
   $version,
+  $comment            = $title,
   $initial_block_size = undef,
   $try_config_login = undef,
   $try_domain_login = undef,
